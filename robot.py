@@ -1,5 +1,6 @@
 import pybullet as p
 import pyrosim.pyrosim as pyrosim
+from pyrosim.neuralNetwork import NEURAL_NETWORK
 import constants as c
 
 from motor import MOTOR
@@ -14,6 +15,7 @@ class ROBOT:
         pyrosim.Prepare_To_Simulate(self.robotId)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
+        self.nn = NEURAL_NETWORK("brain.nndf")
 
     def Prepare_To_Sense(self):
         for linkName in pyrosim.linkNamesToIndices:
@@ -26,11 +28,15 @@ class ROBOT:
     
     def Prepare_To_Act(self):
         for jointName in pyrosim.jointNamesToIndices:
-            amp = c.BLamp if jointName==b'Torso_BackLeg' else c.FLamp if jointName==b'Torso_FrontLeg' else 1
-            feq = c.BLfeq if jointName==b'Torso_BackLeg' else c.FLfeq if jointName==b'Torso_FrontLeg' else 1
-            off = c.BLoff if jointName==b'Torso_BackLeg' else c.FLoff if jointName==b'Torso_FrontLeg' else 0
-            self.motors[jointName] = MOTOR(jointName, self.robotId, amp, feq, off)
+            self.motors[jointName] = MOTOR(jointName, self.robotId)
     
     def Act(self, tc):
-        for motor in self.motors:
-            self.motors[motor].Set_Value(tc)
+        for neuronName in self.nn.Get_Neuron_Names():
+            if self.nn.Is_Motor_Neuron(neuronName):
+                jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
+                desiredAngle = self.nn.Get_Value_Of(neuronName)
+                self.motors[bytes(jointName, 'utf-8')].Set_Value(desiredAngle)
+
+
+    def Think(self, tc):
+        self.nn.Update()

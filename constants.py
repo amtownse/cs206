@@ -1,7 +1,7 @@
 import numpy as np
 
 loopCount = 1000
-time_sleep = 0.001
+time_sleep = 0.0001
 BLamp = np.pi/3
 BLfeq = 1#1.7
 BLoff = 0#0.01
