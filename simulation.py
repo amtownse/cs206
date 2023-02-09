@@ -7,6 +7,7 @@ from robot import ROBOT
 
 class SIMULATION:
     def __init__(self):
+        self.fin = False
         self.physicsClient = p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0,0,c.g)
@@ -14,7 +15,8 @@ class SIMULATION:
         self.robot = ROBOT()
 
     def __del__(self):
-        p.disconnect()
+        if self.fin:
+            p.disconnect()
 
     def run(self):
         for tc in range(c.loopCount):
@@ -25,4 +27,4 @@ class SIMULATION:
             self.robot.Sense(tc)
             self.robot.Think(tc)
             self.robot.Act(tc)
-
+        self.fin = True

@@ -30,8 +30,6 @@ class NEURAL_NETWORK:
 
     def Update(self):
 
-        self.Print()
-
         for neuronName in self.neurons:
 
             if self.neurons[neuronName].Is_Sensor_Neuron():
@@ -40,7 +38,7 @@ class NEURAL_NETWORK:
                 
             else:
 
-                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron()
+                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron(self.neurons, self.synapses)
 
     def Is_Motor_Neuron(self, neuronName):
 

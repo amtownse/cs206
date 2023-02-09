@@ -6,8 +6,10 @@ import time as t
 import random as r
 import constants as c
 from simulation import SIMULATION
+import generate as g
 
 def main():
+    g.main()
     simulation = SIMULATION()
     simulation.run()
 '''
