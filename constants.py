@@ -1,5 +1,6 @@
 import numpy as np
 
+numberOfGenerations = 10
 loopCount = 1000
 time_sleep = 0.00001
 BLamp = np.pi/3

@@ -7,11 +7,16 @@ import random as r
 import constants as c
 from simulation import SIMULATION
 import generate as g
+import sys
 
 def main():
-    g.main()
-    simulation = SIMULATION()
+#    g.main()
+    directOrGUI = "DIRECT"
+    if len(sys.argv)>1:
+        directOrGUI = sys.argv[1]
+    simulation = SIMULATION(directOrGUI)
     simulation.run()
+    simulation.Get_Fitness()
 '''
     physicsClient = p.connect(p.GUI)
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
