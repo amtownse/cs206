@@ -8,6 +8,7 @@ from robot import ROBOT
 class SIMULATION:
     def __init__(self, directOrGUI):
         self.fin = False
+        self.directOrGUI = directOrGUI
         if directOrGUI[0]=="D":
             self.physicsClient = p.connect(p.DIRECT)
         else:
@@ -23,10 +24,11 @@ class SIMULATION:
 
     def run(self):
         for tc in range(c.loopCount):
-#            if tc%100==0:
-#                print(tc)
             p.stepSimulation()
-            t.sleep(c.time_sleep)
+            if self.directOrGUI[0] == "G":
+                t.sleep(c.time_sleep)
+                if tc%100==0:   
+                    print(tc)
             self.robot.Sense(tc)
             self.robot.Think(tc)
             self.robot.Act(tc)
