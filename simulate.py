@@ -12,9 +12,11 @@ import sys
 def main():
 #    g.main()
     directOrGUI = "DIRECT"
+    id = ""
     if len(sys.argv)>1:
         directOrGUI = sys.argv[1]
-    simulation = SIMULATION(directOrGUI)
+        id = str(sys.argv[2])
+    simulation = SIMULATION(directOrGUI, id)
     simulation.run()
     simulation.Get_Fitness()
 '''

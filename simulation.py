@@ -6,8 +6,9 @@ from world import WORLD
 from robot import ROBOT
 
 class SIMULATION:
-    def __init__(self, directOrGUI):
+    def __init__(self, directOrGUI, id):
         self.fin = False
+        self.id = id
         self.directOrGUI = directOrGUI
         if directOrGUI[0]=="D":
             self.physicsClient = p.connect(p.DIRECT)
@@ -16,7 +17,7 @@ class SIMULATION:
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0,0,c.g)
         self.world = WORLD()
-        self.robot = ROBOT()
+        self.robot = ROBOT(self.id)
 
     def __del__(self):
         if self.fin:
