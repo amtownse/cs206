@@ -12,6 +12,11 @@ class PARALLEL_HILL_CLIMBER:
         for i in range(c.ps):
             self.parents[i]=SOLUTION(self.nextAvailableId)
             self.nextAvailableId += 1
+        self.BuildRobotAndWorld()
+
+    def BuildRobotAndWorld(self):
+        self.parents[list(self.parents.keys())[0]].Create_World()
+        self.parents[list(self.parents.keys())[0]].Create_Robot()
 
     def Evolve(self):
         for i in self.parents:

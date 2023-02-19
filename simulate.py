@@ -1,12 +1,12 @@
-import pybullet as p
-import pybullet_data
-import pyrosim.pyrosim as pyrosim
-import numpy as np
-import time as t
-import random as r
-import constants as c
+#import pybullet as p
+#import pybullet_data
+#import pyrosim.pyrosim as pyrosim
+#import numpy as np
+#import time as t
+#import random as r
+#import constants as c
 from simulation import SIMULATION
-import generate as g
+#import generate as g
 import sys
 
 def main():

@@ -13,5 +13,5 @@ FLamp = np.pi/3
 FLfeq = 0.5#1.9
 FLoff = 0#0.19
 g = -9.8
-populationSize = 2
+populationSize = 10
 ps = populationSize

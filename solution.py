@@ -13,14 +13,14 @@ class SOLUTION:
         self.weights = np.random.rand(3,2)*2-1
 
     def Evaluate(self, directOrGui):
-        self.Create_World()
-        self.Create_Robot()
+        #self.Create_World()
+        #self.Create_Robot()
         self.Create_Brain()
-        os.system("python3 simulate.py "+directOrGui+" "+str(self.id)+" &")
+        os.system("python3 simulate.py "+directOrGui+" "+str(self.id)+" 2&>1  &")
 
     def getFitness(self):
         while not os.path.exists('fitness'+str(self.id)+'.txt'):
-            t.sleep(0.01)
+            t.sleep(0.1)
         fitnessFile = open('fitness'+str(self.id)+'.txt','r')   
         self.fitness = float(fitnessFile.read())
         fitnessFile.close()

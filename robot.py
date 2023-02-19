@@ -49,5 +49,5 @@ class ROBOT:
         positionOfLinkZero = stateOfLinkZero[0]
         xCoordinateOfLinkZero = positionOfLinkZero[0]
         outfile = open('fitness'+self.brainId+'.txt','w')
-        outfile.write(str(xCoordinateOfLinkZero))
+        outfile.write(str(-xCoordinateOfLinkZero))
         outfile.close()
