@@ -1,5 +1,6 @@
 import numpy as np
 
+debug = False
 numberOfGenerations = 10
 nog = numberOfGenerations
 loopCount = 1000
@@ -15,3 +16,7 @@ FLoff = 0#0.19
 g = -9.8
 populationSize = 10
 ps = populationSize
+numSensorNeurons = 4
+numMotorNeurons = 8
+motorJointRange = 0.2
+motorStrength = 100

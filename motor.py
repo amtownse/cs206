@@ -11,5 +11,5 @@ class MOTOR:
 
     def Set_Value(self, desiredAngle):
         pyrosim.Set_Motor_For_Joint(bodyIndex = self.robotId, jointName = self.jointName,controlMode = p.POSITION_CONTROL,
-            targetPosition = desiredAngle, maxForce = 90)
+            targetPosition = desiredAngle, maxForce = c.motorStrength)
 

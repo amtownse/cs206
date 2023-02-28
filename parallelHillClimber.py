@@ -57,7 +57,8 @@ class PARALLEL_HILL_CLIMBER:
         for i in self.parents:
             cfitness = self.children[i].fitness
             pfitness = self.parents[i].fitness
-            print('c'+str(i)+':',cfitness,'\t\tp'+str(i)+':',pfitness, end='|')
+            print('c'+str(i)+' :',format(cfitness,'.2f'),' | p'+str(i)+' :',format(pfitness,'.2f'), 
+end='\t')
             if cfitness>pfitness:
                 self.parents[i] = self.children[i]
         print()
