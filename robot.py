@@ -3,6 +3,7 @@ import pyrosim.pyrosim as pyrosim
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 import constants as c
 import os
+import math
 
 from motor import MOTOR
 from sensor import SENSOR
@@ -19,6 +20,7 @@ class ROBOT:
         self.nn = NEURAL_NETWORK("brain"+id+".nndf")
         os.system("rm brain"+id+".nndf")
         self.brainId = id
+        self.nn.Print_Structure()
 
     def Prepare_To_Sense(self):
         for linkName in pyrosim.linkNamesToIndices:
@@ -37,12 +39,13 @@ class ROBOT:
         for neuronName in self.nn.Get_Neuron_Names():
             if self.nn.Is_Motor_Neuron(neuronName):
                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
-                desiredAngle = c.motorJointRange * self.nn.Get_Value_Of(neuronName)
+                desiredAngle = c.motorJointRange * math.tanh(self.nn.Get_Value_Of(neuronName))
                 self.motors[bytes(jointName, 'utf-8')].Set_Value(desiredAngle)
 
 
     def Think(self, tc):
         self.nn.Update()
+        self.nn.Print()
 
     def Get_Fitness(self):
         stateOfLinkZero = p.getLinkState(self.robotId,0)

@@ -28,17 +28,32 @@ class NEURAL_NETWORK:
 
         print("")
 
+    def Print_Structure(self):
+
+        for neuronName in self.neurons: 
+
+            print(self.neurons[neuronName].name, self.neurons[neuronName].T,self.neurons[neuronName].G,self.neurons[neuronName].Z,self.neurons[neuronName].I,self.neurons[neuronName].type, 
+end='\n')
+
     def Update(self):
 
         for neuronName in self.neurons:
-
+            
             if self.neurons[neuronName].Is_Sensor_Neuron():
-
-                self.neurons[neuronName].Update_Sensor_Neuron()
                 
-            else:
+                self.neurons[neuronName].Update_Sensor_Neuron()
+
+        for neuronName in self.neurons:
+
+            if not self.neurons[neuronName].Is_Sensor_Neuron():
 
                 self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron(self.neurons, self.synapses)
+
+        for neuronName in self.neurons:
+
+            if not self.neurons[neuronName].Is_Sensor_Neuron():
+
+                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron_Part2()
 
     def Is_Motor_Neuron(self, neuronName):
 

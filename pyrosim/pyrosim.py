@@ -140,13 +140,17 @@ def Send_Joint(name,parent,child,type,position,jointAxis):
 
     joint.Save(f, jointAxis)
 
-def Send_Motor_Neuron(name,jointName):
+def Send_Motor_Neuron(name,jointName, T, Y, G, Z):
 
-    f.write('    <neuron name = "' + str(name) + '" type = "motor"  jointName = "' + jointName + '" />\n')
+    f.write('    <neuron name = "' + str(name) + '" type = "motor"  jointName = "' + jointName + '"'+str(T)+'"'+str(Y)+'"'+str(G)+'"'+str(Z)+'"0"/>\n')
 
-def Send_Sensor_Neuron(name,linkName):
+def Send_Sensor_Neuron(name,linkName, T, Y, G, Z):
 
-    f.write('    <neuron name = "' + str(name) + '" type = "sensor" linkName = "' + linkName + '" />\n')
+    f.write('    <neuron name = "' + str(name) + '" type = "sensor" linkName = "' + linkName + '"'+str(T)+'"'+str(Y)+'"'+str(G)+'"'+str(Z)+'"1"/>\n')
+
+def Send_Hidden_Neuron(name,linkName, T, Y, G, Z):
+        
+    f.write('    <neuron name = "' + str(name) + '" type = "hidden" linkName = "' + linkName + '"'+str(T)+'"'+str(Y)+'"'+str(G)+'"'+str(Z)+'"0"/>\n')
 
 def Send_Synapse( sourceNeuronName , targetNeuronName , weight ):
 

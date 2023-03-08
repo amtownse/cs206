@@ -18,7 +18,7 @@ class NEURON:
 
         self.Search_For_Joint_Name(line)
 
-        self.Set_Value(0.0)
+        self.Set_Values(line)
 
     def Add_To_Value( self, value ):
 
@@ -66,25 +66,44 @@ class NEURON:
 
         self.value = value
 
+    def Set_Values(self,line):
+        
+        line = line.split('"')
+        self.T = float(line[6])
+        self.value = float(line[7])
+        self.G = float(line[8])
+        self.Z = float(line[9])
+        self.I = line[10]
+        self.x = 0.0
+
     def Update_Sensor_Neuron(self):
 
         self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
 
     def Update_Hidden_Or_Motor_Neuron(self, neurons, synapses):
 
-        self.Set_Value(0.0)
+        self.x=0.0
 
         for synapse in synapses:
 
             if synapse[1] == self.Get_Name():
 
-                self.Allow_Presynaptic_Neuron_To_Influence_Me(neurons[synapse[0]].Get_Value(), synapses[synapse].Get_Weight())
+                self.Allow_Presynaptic_Neuron_To_Influence_Me(neurons[synapse[0]], synapses[synapse].Get_Weight())
 
-        self.Threshold()
+        #self.x = self.Threshold(self.x)
 
-    def Allow_Presynaptic_Neuron_To_Influence_Me(self, value, weight):
+        self.x-=self.value
 
-        self.Add_To_Value(value*weight)
+        self.x *= self.T/2+0.5
+
+    def Allow_Presynaptic_Neuron_To_Influence_Me(self, neuron, weight):
+ 
+        self.x+=weight*self.Threshold(neuron.G*(neuron.value+neuron.Z))
+
+    def Update_Hidden_Or_Motor_Neuron_Part2(self):
+
+        self.value = self.value + self.x
+
 
 # -------------------------- Private methods -------------------------
 
@@ -141,3 +160,7 @@ class NEURON:
     def Threshold(self):
 
         self.value = math.tanh(self.value)
+
+    def Threshold(self, value):
+
+        return math.tanh(value)
