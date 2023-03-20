@@ -45,7 +45,8 @@ class ROBOT:
 
     def Think(self, tc):
         self.nn.Update()
-        self.nn.Print()
+        if c.debug:
+            self.nn.Print()
 
     def Get_Fitness(self):
         stateOfLinkZero = p.getLinkState(self.robotId,0)
