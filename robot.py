@@ -20,7 +20,7 @@ class ROBOT:
         self.nn = NEURAL_NETWORK("brain"+id+".nndf")
         os.system("rm brain"+id+".nndf")
         self.brainId = id
-        self.nn.Print_Structure()
+#        self.nn.Print_Structure()
 
     def Prepare_To_Sense(self):
         for linkName in pyrosim.linkNamesToIndices:
@@ -45,8 +45,8 @@ class ROBOT:
 
     def Think(self, tc):
         self.nn.Update()
-        if c.debug:
-            self.nn.Print()
+#        if c.debug:
+#            self.nn.Print()
 
     def Get_Fitness(self):
         stateOfLinkZero = p.getLinkState(self.robotId,0)

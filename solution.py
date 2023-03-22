@@ -100,7 +100,7 @@ class SOLUTION:
         
         
         
-        pyrosim.Send_Joint( name = "Torso_RighUpperArm" , parent=
+        pyrosim.Send_Joint( name = "Torso_RightUpperArm" , parent=
     "Torso" , child =
     "RightUpperArm" , type = "revolute", position = [-1,0,8], jointAxis = "1 0 0")
         pyrosim.Send_Cube(name="RightUpperArm",pos=[-0.5,0,-0.75],size=[1,1,2])
@@ -140,11 +140,21 @@ G=self.motorparams[3][2], Z=self.motorparams[3][3])
 G=self.motorparams[4][2], Z=self.motorparams[4][3])
         pyrosim.Send_Motor_Neuron( name = 11 , jointName = "LeftLowerLeg_LeftFoot", T=self.motorparams[5][0], Y=self.motorparams[5][1],
 G=self.motorparams[5][2], Z=self.motorparams[5][3]) 
+        pyrosim.Send_Motor_Neuron( name = 12 , jointName = "Torso_LeftUpperArm", T=self.motorparams[6][0], Y=self.motorparams[6][1],
+G=self.motorparams[6][2], Z=self.motorparams[6][3])
+        pyrosim.Send_Motor_Neuron( name = 13 , jointName = "Torso_RightUpperArm", T=self.motorparams[7][0], Y=self.motorparams[7][1],
+G=self.motorparams[7][2], Z=self.motorparams[7][3])
+        pyrosim.Send_Motor_Neuron( name = 14 , jointName = "LeftUpperArm_LeftLowerArm", T=self.motorparams[8][0], Y=self.motorparams[8][1],
+G=self.motorparams[8][2], Z=self.motorparams[8][3])
+        pyrosim.Send_Motor_Neuron( name = 15 , jointName = "RightUpperArm_RightLowerArm", T=self.motorparams[9][0], Y=self.motorparams[9][1],
+G=self.motorparams[9][2], Z=self.motorparams[9][3])
+
 
 
         for i in range(c.numInnerNeurons):
-            pyrosim.Send_Hidden_Neuron( name = 12+i, linkName = "null", T=self.innerparams[i][0], Y=self.innerparams[i][1], 
+            pyrosim.Send_Hidden_Neuron( name = 16+i, linkName = "null", T=self.innerparams[i][0], Y=self.innerparams[i][1], 
 G=self.innerparams[i][2], Z=self.innerparams[i][3])
+
         for currentRow in range(c.numSensorNeurons):
             for currentColumn in range(c.numInnerNeurons):
                 pyrosim.Send_Synapse( sourceNeuronName = currentRow, targetNeuronName = 

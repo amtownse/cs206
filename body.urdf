@@ -253,7 +253,7 @@
             </geometry>
         </collision>
     </link>
-    <joint name="Torso_RighUpperArm" type="revolute">
+    <joint name="Torso_RightUpperArm" type="revolute">
        <parent link="Torso"/>
        <child  link="RightUpperArm"/>
        <origin rpy="0 0 0" xyz="-1 0 8" />
