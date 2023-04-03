@@ -6,12 +6,25 @@ import os
 import sys
 
 class PARALLEL_HILL_CLIMBER:
-    def __init__(self):
+    def __init__(self, loadOrRun):
+        os.system("rm fitness*")
         self.nextAvailableId = 0
         self.parents = {}
-        for i in range(c.ps):
-            self.parents[i]=SOLUTION(self.nextAvailableId)
-            self.nextAvailableId += 1
+        if loadOrRun == "R":
+            for i in range(c.ps):
+                self.parents[i]=SOLUTION(self.nextAvailableId, "")
+                self.nextAvailableId += 1
+            self.startGen = 0
+        else:#L
+            loadFile = open('save.txt','r')
+            loadWrk = loadFile.read()
+            loadFile.close()
+            loadWrk = loadWrk.split("!")
+            self.startGen = int(loadWrk[0])
+            loadWrk=loadWrk[1].split("^")
+            for i in range(len(loadWrk)):
+                self.parents[i]=SOLUTION(self.nextAvailableId, loadWrk[i])
+                self.nextAvailableId += 1 
         self.BuildRobotAndWorld()
 
     def BuildRobotAndWorld(self):
@@ -24,9 +37,28 @@ class PARALLEL_HILL_CLIMBER:
         for i in self.parents:
             self.parents[i].getFitness()
         self.showBest()
-        for currentGeneration in range(c.numberOfGenerations):
+        for currentGeneration in range(self.startGen, c.numberOfGenerations):
             self.Evolve_For_One_Generation()
+            self.save(currentGeneration)
+        temp = input("show best?:")
         self.showBest()
+
+    def save(self, curGen):
+        outstr=str(curGen)+"!"
+        for parent in self.parents:
+            outstr+=str(self.parents[parent].fitness)+"@"
+            weights=[self.parents[parent].sensorweights,self.parents[parent].innerweights,self.parents[parent].motorweights,self.parents[parent].sensorparams,self.parents[parent].innerparams,self.parents[parent].motorparams]
+            for weight in weights:
+                for row in weight:
+                    for col in row:
+                        outstr+=str(col)+"#"
+                    outstr=outstr[:-1]+"$"
+                outstr=outstr[:-1]+"%"
+            outstr=outstr[:-1]+"^"
+        outstr=outstr[:-1]
+        saveFile = open('save.txt','w')
+        saveFile.write(outstr)
+        saveFile.close()
 
     def Evolve_For_One_Generation(self):
         # silence command-line output temporarily
@@ -40,6 +72,7 @@ class PARALLEL_HILL_CLIMBER:
         # unsilence command-line output
         sys.stdout, sys.stderr = sys.__stdout__, sys.__stderr__
         self.Select()
+        
 
     def Spawn(self):
         self.children = {}

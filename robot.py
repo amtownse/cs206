@@ -4,6 +4,7 @@ from pyrosim.neuralNetwork import NEURAL_NETWORK
 import constants as c
 import os
 import math
+import numpy as np
 
 from motor import MOTOR
 from sensor import SENSOR
@@ -15,16 +16,16 @@ class ROBOT:
         self.motors={}
         self.robotId = p.loadURDF("body.urdf")
         pyrosim.Prepare_To_Simulate(self.robotId)
-        self.Prepare_To_Sense()
+        self.Prepare_To_Sense(id)
         self.Prepare_To_Act()
         self.nn = NEURAL_NETWORK("brain"+id+".nndf")
         os.system("rm brain"+id+".nndf")
         self.brainId = id
 #        self.nn.Print_Structure()
 
-    def Prepare_To_Sense(self):
+    def Prepare_To_Sense(self, brainid):
         for linkName in pyrosim.linkNamesToIndices:
-            self.sensors[linkName] = SENSOR(linkName)
+            self.sensors[linkName] = SENSOR(linkName, brainid)
 
     def Sense(self, tc):
         for sensor in self.sensors:
@@ -52,6 +53,7 @@ class ROBOT:
         stateOfLinkZero = p.getLinkState(self.robotId,0)
         positionOfLinkZero = stateOfLinkZero[0]
         yCoordinateOfLinkZero = positionOfLinkZero[1]
+        zminTorso = np.min(self.sensors['Torso'].values)
         outfile = open('fitness'+self.brainId+'.txt','w')
-        outfile.write(str(-yCoordinateOfLinkZero))
+        outfile.write(str(yCoordinateOfLinkZero*zminTorso))
         outfile.close()

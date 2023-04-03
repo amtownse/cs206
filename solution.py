@@ -6,14 +6,70 @@ import os
 import constants as c
 
 class SOLUTION:
-    def __init__(self, id):
+
+    def __init__(self, id, loadStr):
         self.id = id
-        self.sensorweights = np.random.rand(c.numSensorNeurons,c.numInnerNeurons)*2-1
-        self.innerweights = np.random.rand(c.numInnerNeurons,c.numInnerNeurons)*2-1
-        self.motorweights = np.random.rand(c.numInnerNeurons,c.numMotorNeurons)*2-1
-        self.sensorparams = np.random.rand(c.numSensorNeurons,4)*2-1
-        self.innerparams = np.random.rand(c.numInnerNeurons,4)*2-1
-        self.motorparams = np.random.rand(c.numMotorNeurons,4)*2-1
+        if loadStr!="":
+            self.fitness = float(loadStr.split("@")[0])
+            loadWrk = loadStr.split("@")[1].split("%")
+            self.sensorweights = []
+            for row in loadWrk[0].split("$"):
+                self.sensorweights.append([])
+                for col in row.split("#"):
+                    self.sensorweights[-1].append(float(col))
+            self.innerweights = []
+            for row in loadWrk[1].split("$"):
+                self.innerweights.append([])
+                for col in row.split("#"):
+                    self.innerweights[-1].append(float(col))
+            self.motorweights = []
+            for row in loadWrk[2].split("$"):
+                self.motorweights.append([])
+                for col in row.split("#"):
+                    self.motorweights[-1].append(float(col))
+            self.sensorparams = []
+            for row in loadWrk[3].split("$"):
+                self.sensorparams.append([])
+                for col in row.split("#"):
+                    self.sensorparams[-1].append(float(col))
+            self.innerparams = []
+            for row in loadWrk[4].split("$"):
+                self.innerparams.append([])
+                for col in row.split("#"):
+                    self.innerparams[-1].append(float(col))
+            self.motorparams = []
+            for row in loadWrk[5].split("$"):
+                self.motorparams.append([])
+                for col in row.split("#"):
+                    self.motorparams[-1].append(float(col))
+        else:
+            self.id = id
+            self.sensorweights = np.random.rand(c.numSensorNeurons,c.numInnerNeurons)*2-1
+            self.innerweights = np.random.rand(c.numInnerNeurons,c.numInnerNeurons)*2-1
+            self.motorweights = np.random.rand(c.numInnerNeurons,c.numMotorNeurons)*2-1
+            self.sensorparams = np.random.rand(c.numSensorNeurons,4)*2-1
+            self.innerparams = np.random.rand(c.numInnerNeurons,4)*2-1
+            self.motorparams = np.random.rand(c.numMotorNeurons,4)*2-1
+            if False:
+                #			  rf	    lf	
+                self.sensorweights = [[1,1,1,1],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                self.innerweights = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                self.motorweights = [[1,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
+                self.sensorparams = [[0,0,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                self.innerparams = [[0,0,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                #				  										  
+                self.motorparams = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+
+                #                     rf        lf
+                self.sensorweights = [[1,0,-1,0],[-1,1,0,-1],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                self.innerweights = [[1,0,1,0],[0,1,0,1],[1,0,1,1],[1,1,0,1]]
+                self.motorweights = [[1,1,1,1,1,-1,1,0,1,0],[0,0,1,0,0,-1,0,1,0,-1],[0,0,0,-1,1,0,0,1,1,-1],[0,0,0,-1,0,0,0,1,0,-1]]
+                self.sensorparams = [[0,0,1,0],[0,0,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                self.innerparams = [[-.5,0,1,0],[-.5,0,1,1],[-.5,1,1,0],[-.5,1,1,1]]
+                #
+                self.motorparams = [[-.5,1,0,0],[-.5,-1,0,0],[1,1,0,0],[-.5,-1,0,0],[-.5,1,0,0],[-.5,-1,0,0],[1,-1,0,0],[1,1,0,0],[1,-1,0,0],[1,1,0,0]]
+
+
 
     def Evaluate(self, directOrGui):
         #self.Create_World()
@@ -145,7 +201,7 @@ G=self.motorparams[6][2], Z=self.motorparams[6][3])
         pyrosim.Send_Motor_Neuron( name = 13 , jointName = "Torso_RightUpperArm", T=self.motorparams[7][0], Y=self.motorparams[7][1],
 G=self.motorparams[7][2], Z=self.motorparams[7][3])
         pyrosim.Send_Motor_Neuron( name = 14 , jointName = "LeftUpperArm_LeftLowerArm", T=self.motorparams[8][0], Y=self.motorparams[8][1],
-G=self.motorparams[8][2], Z=self.motorparams[8][3])
+	G=self.motorparams[8][2], Z=self.motorparams[8][3])
         pyrosim.Send_Motor_Neuron( name = 15 , jointName = "RightUpperArm_RightLowerArm", T=self.motorparams[9][0], Y=self.motorparams[9][1],
 G=self.motorparams[9][2], Z=self.motorparams[9][3])
 

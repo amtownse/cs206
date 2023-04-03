@@ -100,7 +100,7 @@ class NEURON:
 
         self.x-=self.value
 
-        self.x *= self.T/2+0.5
+        self.x *= self.Threshold(self.T)/2+.5
 
     def Allow_Presynaptic_Neuron_To_Influence_Me(self, neuron, weight):
  
