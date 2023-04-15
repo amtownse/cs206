@@ -18,7 +18,7 @@ class ROBOT:
         pyrosim.Prepare_To_Simulate(self.robotId)
         self.Prepare_To_Sense(id)
         self.Prepare_To_Act()
-        self.nn = NEURAL_NETWORK("brain"+id+".nndf")
+        self.nn = NEURAL_NETWORK("brain"+id+".nndf", self.robotId)
         os.system("rm brain"+id+".nndf")
         self.brainId = id
 #        self.nn.Print_Structure()
@@ -41,6 +41,8 @@ class ROBOT:
             if self.nn.Is_Motor_Neuron(neuronName):
                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
                 desiredAngle = c.motorJointRange * math.tanh(self.nn.Get_Value_Of(neuronName))
+                if jointName in c.ranges.keys():
+                    desiredAngle = c.ranges[jointName][0]+c.ranges[jointName][1]*(math.tanh(self.nn.Get_Value_Of(neuronName))/2+0.5)
                 self.motors[bytes(jointName, 'utf-8')].Set_Value(desiredAngle)
 
 
@@ -53,7 +55,11 @@ class ROBOT:
         stateOfLinkZero = p.getLinkState(self.robotId,0)
         positionOfLinkZero = stateOfLinkZero[0]
         yCoordinateOfLinkZero = positionOfLinkZero[1]
-        zminTorso = np.min(self.sensors['Torso'].values)
+        zminTorso = p.getBasePositionAndOrientation(self.robotId)[0][2]
+        angle1 = p.getBasePositionAndOrientation(self.robotId)[1][0]
+        angle2 = p.getBasePositionAndOrientation(self.robotId)[1][1]
         outfile = open('fitness'+self.brainId+'.txt','w')
-        outfile.write(str(yCoordinateOfLinkZero*zminTorso))
+        outfile.write(str(abs(yCoordinateOfLinkZero*(0.1 if zminTorso<1.5 else zminTorso)**2/angle2/angle1)))
         outfile.close()
+        print(str(abs(yCoordinateOfLinkZero*(0.03 if zminTorso<3 else zminTorso)**2/(0.5+abs(angle2))/(0.5+abs(angle1)))))
+        print(p.getBasePositionAndOrientation(self.robotId))

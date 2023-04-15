@@ -8,7 +8,7 @@ import pyrosim.constants as c
 
 class NEURON: 
 
-    def __init__(self,line):
+    def __init__(self,line,bodyid):
 
         self.Determine_Name(line)
 
@@ -19,6 +19,8 @@ class NEURON:
         self.Search_For_Joint_Name(line)
 
         self.Set_Values(line)
+
+        self.bodyid = bodyid
 
     def Add_To_Value( self, value ):
 
@@ -75,12 +77,31 @@ class NEURON:
         self.Z = float(line[9])
         self.I = line[10]
         self.x = 0.0
+        if self.Is_Sensor_Neuron() and self.Get_Link_Name()=="zzzzz1":
+            self.cpg = [0]*(int(self.T)+1)
+            self.cpg[0] = 1
 
     def Update_Sensor_Neuron(self):
 
         if self.Get_Link_Name()[0:5]!="zzzzz":
 
             self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
+
+        elif self.Get_Link_Name()[-1]=="1":
+
+            self.Set_Value(self.cpg[0])
+
+            self.cpg.append(self.cpg[0])
+
+            del(self.cpg[0])
+
+        elif self.Get_Link_Name()[-1]=="2":
+
+            self.Set_Value(pybullet.getBasePositionAndOrientation(self.bodyid)[1][0])
+        
+        elif self.Get_Link_Name()[-1]=="3":
+    
+            self.Set_Value(pybullet.getBasePositionAndOrientation(self.bodyid)[1][1])
 
         else:
 

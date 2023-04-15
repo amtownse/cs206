@@ -10,6 +10,7 @@ class PARALLEL_HILL_CLIMBER:
         os.system("rm fitness*")
         self.nextAvailableId = 0
         self.parents = {}
+        self.loadOrRun = loadOrRun
         if loadOrRun == "R":
             for i in range(c.ps):
                 self.parents[i]=SOLUTION(self.nextAvailableId, "")
@@ -36,7 +37,8 @@ class PARALLEL_HILL_CLIMBER:
             self.parents[i].Evaluate("DIRECT")
         for i in self.parents:
             self.parents[i].getFitness()
-        self.showBest()
+        if self.loadOrRun == "R":
+            self.showBest()
         for currentGeneration in range(self.startGen, c.numberOfGenerations):
             self.Evolve_For_One_Generation()
             self.save(currentGeneration)

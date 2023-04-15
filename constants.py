@@ -1,7 +1,7 @@
 import numpy as np
 
-debug = False
-numberOfGenerations = 100
+debug = True
+numberOfGenerations = 1
 nog = numberOfGenerations
 loopCount = 1000
 lc = loopCount
@@ -14,10 +14,11 @@ FLamp = np.pi/3
 FLfeq = 0.5#1.9
 FLoff = 0#0.19
 g = -9.8
-populationSize = 50
+populationSize = 1
 ps = populationSize
 numSensorNeurons = 6
 numMotorNeurons = 10
 numInnerNeurons = 4
 motorJointRange = 0.65
 motorStrength = 100
+ranges={"RightUpperLeg_RightLowerLeg":[-2,2], "LeftUpperLeg_LeftLowerLeg":[-2,2],"RightUpperArm_RightLowerArm":[0,2], "LeftUpperArm_LeftLowerArm":[0,2]}

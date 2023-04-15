@@ -175,7 +175,7 @@ class SOLUTION:
 G=self.sensorparams[0][2], Z=self.sensorparams[0][3])
         pyrosim.Send_Sensor_Neuron(name = 1 , linkName = "RightFoot", T=self.sensorparams[1][0], Y=self.sensorparams[1][1], 
 G=self.sensorparams[1][2], Z=self.sensorparams[1][3])
-        pyrosim.Send_Sensor_Neuron(name = 2 , linkName = "zzzzz1", T=self.sensorparams[2][0], Y=self.sensorparams[2][1],
+        pyrosim.Send_Sensor_Neuron(name = 2 , linkName = "zzzzz1", T=(self.sensorparams[2][0]/2+0.5)*10, Y=self.sensorparams[2][1],
 G=self.sensorparams[2][2], Z=self.sensorparams[2][3])
         pyrosim.Send_Sensor_Neuron(name = 3 , linkName = "zzzzz2", T=self.sensorparams[3][0], Y=self.sensorparams[3][1],
 G=self.sensorparams[3][2], Z=self.sensorparams[3][3])
