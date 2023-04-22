@@ -4,6 +4,7 @@ import constants as c
 import time as t
 from world import WORLD
 from robot import ROBOT
+import random
 
 class SIMULATION:
     def __init__(self, directOrGUI, id):
@@ -24,7 +25,7 @@ class SIMULATION:
             p.disconnect()
 
     def run(self):
-        for tc in range(c.loopCount):
+        for tc in range(c.loopCount+random.randint(0,c.loopCount//2)):
             p.stepSimulation()
             if self.directOrGUI[0] == "G":
                 t.sleep(c.time_sleep)
@@ -35,5 +36,5 @@ class SIMULATION:
             self.robot.Act(tc)
         self.fin = True
 
-    def Get_Fitness(self):
-        self.robot.Get_Fitness()
+    def Get_Fitness(self, curGen):
+        self.robot.Get_Fitness(curGen)

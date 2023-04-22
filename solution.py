@@ -71,11 +71,11 @@ class SOLUTION:
 
 
 
-    def Evaluate(self, directOrGui):
+    def Evaluate(self, directOrGui, curGen):
         #self.Create_World()
         #self.Create_Robot()
         self.Create_Brain()
-        os.system("python3 simulate.py "+directOrGui+" "+str(self.id)+(" 2&>1 " if not c.debug else 
+        os.system("python3 simulate.py "+directOrGui+" "+str(self.id)+" "+str(curGen)+(" 2&>1 " if not c.debug else 
 " ")+"&")
 
     def getFitness(self):

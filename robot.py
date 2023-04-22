@@ -51,7 +51,7 @@ class ROBOT:
 #        if c.debug:
 #            self.nn.Print()
 
-    def Get_Fitness(self):
+    def Get_Fitness(self, curGen):
         stateOfLinkZero = p.getLinkState(self.robotId,0)
         positionOfLinkZero = stateOfLinkZero[0]
         yCoordinateOfLinkZero = positionOfLinkZero[1]
@@ -59,7 +59,12 @@ class ROBOT:
         angle1 = p.getBasePositionAndOrientation(self.robotId)[1][0]
         angle2 = p.getBasePositionAndOrientation(self.robotId)[1][1]
         outfile = open('fitness'+self.brainId+'.txt','w')
-        outfile.write(str(abs(yCoordinateOfLinkZero*(0.1 if zminTorso<1.5 else zminTorso)**2/angle2/angle1)))
+#        if int(curGen) < c.numberOfGenerations/2:
+#        outfile.write(str(zminTorso))
+#        outfile.write(str(zminTorso*yCoordinateOfLinkZero))
+        outfile.write(str(zminTorso*yCoordinateOfLinkZero/(abs(angle1)+abs(angle2)+1)))
+#        else:
+#            outfile.write(str(abs(yCoordinateOfLinkZero*zminTorso**2/angle2/angle1)))
         outfile.close()
-        print(str(abs(yCoordinateOfLinkZero*(0.03 if zminTorso<3 else zminTorso)**2/(0.5+abs(angle2))/(0.5+abs(angle1)))))
-        print(p.getBasePositionAndOrientation(self.robotId))
+#        print(str(abs(yCoordinateOfLinkZero*(0.03 if zminTorso<3 else zminTorso)**2/(0.5+abs(angle2))/(0.5+abs(angle1)))))
+#        print(p.getBasePositionAndOrientation(self.robotId))

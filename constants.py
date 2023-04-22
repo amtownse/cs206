@@ -1,7 +1,7 @@
 import numpy as np
 
-debug = True
-numberOfGenerations = 1
+debug = False
+numberOfGenerations = 500
 nog = numberOfGenerations
 loopCount = 1000
 lc = loopCount
@@ -14,7 +14,7 @@ FLamp = np.pi/3
 FLfeq = 0.5#1.9
 FLoff = 0#0.19
 g = -9.8
-populationSize = 1
+populationSize = 25
 ps = populationSize
 numSensorNeurons = 6
 numMotorNeurons = 10

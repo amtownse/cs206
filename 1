@@ -1,24 +1,35 @@
 pybullet build time: Jan 14 2023 14:08:29
-b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
-expected a world element, continuing without it.Traceback (most recent call last):
-  File "simulate.py", line 56, in <module>
-    main()
-  File "simulate.py", line 19, in main
-    simulation = SIMULATION(directOrGUI, id)
-  File "/Users/alexandertownsend/Desktop/cs206/cs206/simulation.py", line 20, in __init__
-    self.robot = ROBOT(self.id)
-  File "/Users/alexandertownsend/Desktop/cs206/cs206/robot.py", line 21, in __init__
-    self.nn = NEURAL_NETWORK("brain"+id+".nndf")
-  File "/Users/alexandertownsend/Desktop/cs206/cs206/pyrosim/neuralNetwork.py", line 17, in __init__
-    self.Digest(line)
-  File "/Users/alexandertownsend/Desktop/cs206/cs206/pyrosim/neuralNetwork.py", line 97, in Digest
-    self.Add_Neuron_According_To(line)
-  File "/Users/alexandertownsend/Desktop/cs206/cs206/pyrosim/neuralNetwork.py", line 79, in Add_Neuron_According_To
-    neuron = NEURON(line)
-  File "/Users/alexandertownsend/Desktop/cs206/cs206/pyrosim/neuron.py", line 21, in __init__
-    self.Set_Values(line)
-  File "/Users/alexandertownsend/Desktop/cs206/cs206/pyrosim/neuron.py", line 78, in Set_Values
-    if self.Get_Link_Name()=="zzzzz1":
-  File "/Users/alexandertownsend/Desktop/cs206/cs206/pyrosim/neuron.py", line 33, in Get_Link_Name
-    return self.linkName
-AttributeError: 'NEURON' object has no attribute 'linkName'
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+1000
+1100
+1200
+1300
+1400
+Version = 4.1 INTEL-18.8.5
+Vendor = Intel Inc.
+Renderer = Intel(R) UHD Graphics 617
+b3Printf: Selected demo: Physics Server
+startThreads creating 1 threads.
+starting thread 0
+started thread 0 
+MotionThreadFunc thread started
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: expected a world element, continuing without it.
+numActiveThreads = 0
+stopping threads
+destroy semaphore
+semaphore destroyed
+Thread with taskId 0 exiting
+Thread TERMINATED
+destroy main semaphore
+main semaphore destroyed

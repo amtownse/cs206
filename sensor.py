@@ -16,6 +16,7 @@ class SENSOR:
             #np.save("data/"+self.linkName+"Data"+self.brainid+".npy",self.values)
 
     def Get_Value(self, tc):
-        self.values[tc] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
+        if tc<c.loopCount:
+            self.values[tc] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
         if tc == c.loopCount-1:
             self.fin = True

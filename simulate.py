@@ -13,12 +13,14 @@ def main():
 #    g.main()
     directOrGUI = "DIRECT"
     id = ""
+    curGen = 0
     if len(sys.argv)>1:
         directOrGUI = sys.argv[1]
         id = str(sys.argv[2])
+        curGen = sys.argv[3]
     simulation = SIMULATION(directOrGUI, id)
     simulation.run()
-    simulation.Get_Fitness()
+    simulation.Get_Fitness(curGen)
 '''
     physicsClient = p.connect(p.GUI)
     p.setAdditionalSearchPath(pybullet_data.getDataPath())

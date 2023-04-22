@@ -34,16 +34,16 @@ class PARALLEL_HILL_CLIMBER:
 
     def Evolve(self):
         for i in self.parents:
-            self.parents[i].Evaluate("DIRECT")
+            self.parents[i].Evaluate("DIRECT",0)
         for i in self.parents:
             self.parents[i].getFitness()
         if self.loadOrRun == "R":
-            self.showBest()
+            self.showBest(0)
         for currentGeneration in range(self.startGen, c.numberOfGenerations):
-            self.Evolve_For_One_Generation()
+            self.Evolve_For_One_Generation(currentGeneration)
             self.save(currentGeneration)
         temp = input("show best?:")
-        self.showBest()
+        self.showBest(c.numberOfGenerations)
 
     def save(self, curGen):
         outstr=str(curGen)+"!"
@@ -62,13 +62,13 @@ class PARALLEL_HILL_CLIMBER:
         saveFile.write(outstr)
         saveFile.close()
 
-    def Evolve_For_One_Generation(self):
+    def Evolve_For_One_Generation(self, currentGeneration):
         # silence command-line output temporarily
         sys.stdout, sys.stderr = os.devnull, os.devnull
         self.Spawn()
         self.Mutate()
         for child in self.children:
-            self.children[child].Evaluate("DIRECT")
+            self.children[child].Evaluate("DIRECT", currentGeneration)
         for child in self.children:  
             self.children[child].getFitness()
         # unsilence command-line output
@@ -98,10 +98,10 @@ end='\t')
                 self.parents[i] = self.children[i]
         print()
 
-    def showBest(self):
+    def showBest(self, curGen):
         best = list(self.parents.keys())[0]
         for parent in self.parents:
             if self.parents[parent].fitness>self.parents[best].fitness:
                 best = parent
-        self.parents[best].Evaluate("GUI")
+        self.parents[best].Evaluate("GUI", curGen)
         self.parents[best].getFitness()
